@@ -362,6 +362,17 @@ CheckKeyCorner.Parent = CheckKey
 GetKey.MouseButton1Click:Connect(function()
    copyLink()
 end)
+
+verifyButton.MouseButton1Click:Connect(function()
+    local key = keyBox.Text;
+    local success = verifyKey(key);
+
+    if success then
+        print("key is valid.");
+    else
+        print("key is invalid.");
+    end
+end)
  
 local function validateKey(key)
     return key == "Key" -- Replace this with your key
