@@ -344,6 +344,41 @@ CheckKey.Parent = Frame
 local CheckKeyCorner = Instance.new("UICorner")
 CheckKeyCorner.CornerRadius = UDim.new(0, 5)
 CheckKeyCorner.Parent = CheckKey
+ 
+GetKey.MouseButton1Click:Connect(function()
+   copyLink()
+end)
+
+verifyButton.MouseButton1Click:Connect(function()
+    local key = keyBox.Text;
+    local success = verifyKey(key);
+
+    if success then
+        print("key is valid.");
+    else
+        print("key is invalid.");
+    end
+end)
+ 
+CheckKey.MouseButton1Click:Connect(function()
+    local enteredKey = TextBox.Text
+    if validateKey(enteredKey) then
+        TextBox.PlaceholderText = "Correct Key!"
+        TextBox.Text = ""
+        wait(1)
+        ScreenGui:Destroy()
+ 
+-- Put Your Script Here
+loadstring(game:HttpGet('https://pastebin.com/raw/YSL3xKYU'))()
+ 
+    else
+        TextBox.PlaceholderText = "Invalid key. Try again."
+        TextBox.Text = ""
+        wait(1)
+        TextBox.PlaceholderText = "Enter Key..."
+        TextBox.Text = ""
+    end
+end)
 
 copyButton.MouseButton1Click:Connect(function()
     copyLink();
