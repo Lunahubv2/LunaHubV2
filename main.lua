@@ -359,6 +359,10 @@ verifyButton.MouseButton1Click:Connect(function()
         print("key is invalid.");
     end
 end)
+
+local function validateKey(key)
+    return key == "Key" -- Replace this with your key
+end
  
 CheckKey.MouseButton1Click:Connect(function()
     local enteredKey = TextBox.Text
