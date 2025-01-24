@@ -15,6 +15,15 @@ local fSetClipboard, fRequest, fStringChar, fToString, fStringSub, fOsTime, fMat
 local cachedLink, cachedTime = "", 0;
 local HttpService = game:GetService("HttpService")
 
+local host = "https://api.platoboost.com";
+local hostResponse = fRequest({
+    Url = host .. "/public/connectivity",
+    Method = "GET"
+});
+if hostResponse.StatusCode ~= 200 or hostResponse.StatusCode ~= 429 then
+    host = "https://api.platoboost.net";
+end
+
 function lEncode(data)
     return HttpService:JSONEncode(data)
 end
