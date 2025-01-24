@@ -413,9 +413,9 @@ task.spawn(function()
     
     Checkkey.MouseButton1Down:Connect(function() 
         if TextBox and TextBox.Text then
-        ScreenGui:Destroy()
-                   
-            
+        if Verify then
+           ScreenGui:Destroy()      
+                    
             local Verify = verifyKey(TextBox.Text)
             if Verify then
                 loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))()
