@@ -425,8 +425,8 @@ task.spawn(function()
         copyLink()
     end)
     
-    Exit.MouseButton1Down:Connect(function()
-        if ScreenGui then
+    local Verify = verifyKey(TextBox.Text)
+        if Verify then
             ScreenGui:Destroy()
         end
     end)
