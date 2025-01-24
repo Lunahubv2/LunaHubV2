@@ -413,12 +413,12 @@ task.spawn(function()
     
     Checkkey.MouseButton1Down:Connect(function() 
         if TextBox and TextBox.Text then
-        if Verify then
-           ScreenGui:Destroy()      
+              
                     
             local Verify = verifyKey(TextBox.Text)
             if Verify then
-                loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))()
+                loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))() then
+            ScreenGui:Destroy()         
             else
                 print("Key Is in valid")
             end 
