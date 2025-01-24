@@ -2,7 +2,7 @@ local a=2^32;local b=a-1;local function c(d,e)local f,g=0,1;while d~=0 or e~=0 d
 local lEncode, lDecode, lDigest = a3, aw, Z;
 
 local service =362;--Set your Platoboost Id 
-local secret = "d4a12638-daa3-4728-ab9c-f1c5543ca55e"; --Set Your Platoboost Api key
+local secret = "c1178bed30331a2606fe93f4dd9aa7b"; --Set Your Platoboost Api key
 local useNonce = true; 
 local onMessage = function(message)  game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", { Text = message; }) end;
 
