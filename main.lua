@@ -260,172 +260,117 @@ local getFlag = function(name)
     end
 end
 
-task.spawn(function()
-    local ScreenGui = Instance.new("ScreenGui")
-    local Frame = Instance.new("Frame")
-    local Topbar = Instance.new("Frame")
-    local Exit = Instance.new("TextButton")
-    local minimize = Instance.new("TextButton")
-    local Frame_2 = Instance.new("Frame")
-    local Getkey = Instance.new("TextButton")
-    local Checkkey = Instance.new("TextButton")
-    local TextBox = Instance.new("TextBox")
-    local TextLabel = Instance.new("TextLabel")
-    
-
-    ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    
-    Frame.Parent = ScreenGui
-    Frame.BackgroundColor3 = Color3.fromRGB(76, 76, 76)
-    Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Frame.BorderSizePixel = 0
-    Frame.Position = UDim2.new(0.286729872, 0, 0.295880139, 0)
-    Frame.Size = UDim2.new(0, 359, 0, 217)
-    
-    Topbar.Name = "Topbar"
-    Topbar.Parent = Frame
-    Topbar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Topbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Topbar.BorderSizePixel = 0
-    Topbar.Size = UDim2.new(0, 359, 0, 27)
-    
-    Exit.Name = "Exit"
-    Exit.Parent = Topbar
-    Exit.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    Exit.BackgroundTransparency = 0.300
-    Exit.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Exit.BorderSizePixel = 0
-    Exit.Position = UDim2.new(0.905292451, 0, 0.111111112, 0)
-    Exit.Size = UDim2.new(0, 25, 0, 20)
-    Exit.Font = Enum.Font.SourceSans
-    Exit.Text = "X"
-    Exit.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Exit.TextScaled = true
-    Exit.TextSize = 14.000
-    Exit.TextWrapped = true
-    
-    minimize.Name = "minimize"
-    minimize.Parent = Topbar
-    minimize.BackgroundColor3 = Color3.fromRGB(85, 255, 0)
-    minimize.BackgroundTransparency = 0.300
-    minimize.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    minimize.BorderSizePixel = 0
-    minimize.Position = UDim2.new(0.810584962, 0, 0.111111112, 0)
-    minimize.Size = UDim2.new(0, 25, 0, 20)
-    minimize.Font = Enum.Font.SourceSans
-    minimize.Text = "-"
-    minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
-    minimize.TextScaled = true
-    minimize.TextSize = 14.000
-    minimize.TextWrapped = true
-    
-    Frame_2.Parent = Frame
-    Frame_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Frame_2.BackgroundTransparency = 1.000
-    Frame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Frame_2.BorderSizePixel = 0
-    Frame_2.Position = UDim2.new(0, 0, 0.124423966, 0)
-    Frame_2.Size = UDim2.new(0, 359, 0, 189)
-    
-    Getkey.Name = "Getkey"
-    Getkey.Parent = Frame_2
-    Getkey.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Getkey.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Getkey.BorderSizePixel = 0
-    Getkey.Position = UDim2.new(0.317548752, 0, 0.523809552, 0)
-    Getkey.Size = UDim2.new(0, 130, 0, 32)
-    Getkey.Font = Enum.Font.SourceSans
-    Getkey.Text = "Getkey"
-    Getkey.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Getkey.TextScaled = true
-    Getkey.TextSize = 14.000
-    Getkey.TextWrapped = true
-    
-    Checkkey.Name = "Checkkey"
-    Checkkey.Parent = Frame_2
-    Checkkey.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Checkkey.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Checkkey.BorderSizePixel = 0
-    Checkkey.Position = UDim2.new(0.317548752, 0, 0.767195761, 0)
-    Checkkey.Size = UDim2.new(0, 130, 0, 32)
-    Checkkey.Font = Enum.Font.SourceSans
-    Checkkey.Text = "CheckKey"
-    Checkkey.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Checkkey.TextScaled = true
-    Checkkey.TextSize = 14.000
-    Checkkey.TextWrapped = true
-    
-    TextBox.Parent = Frame_2
-    TextBox.BackgroundColor3 = Color3.fromRGB(139, 139, 139)
-    TextBox.BackgroundTransparency = 0.600
-    TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    TextBox.BorderSizePixel = 0
-    TextBox.Position = UDim2.new(0.0779944286, 0, 0.137566134, 0)
-    TextBox.Size = UDim2.new(0, 304, 0, 42)
-    TextBox.Font = Enum.Font.SourceSans
-    TextBox.Text = ""
-    TextBox.TextTransparency = 1
-    TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
-    TextBox.TextScaled = true
-    TextBox.TextSize = 14.000
-    TextBox.TextWrapped = true
-    
-    TextLabel.Parent = Frame_2
-    TextLabel.BackgroundColor3 = Color3.fromRGB(211, 211, 211)
-    TextLabel.BackgroundTransparency = 1.000
-    TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    TextLabel.BorderSizePixel = 0
-    TextLabel.Position = UDim2.new(0.0779944286, 0, 0.137566134, 0)
-    TextLabel.Size = UDim2.new(0, 304, 0, 42)
-    TextLabel.ZIndex = 2
-    TextLabel.Font = Enum.Font.SourceSans
-    TextLabel.Text = "In Put Your Key"
-    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
-    TextLabel.TextScaled = true
-    TextLabel.TextSize = 14.000
-    TextLabel.TextStrokeTransparency = 0.830
-    TextLabel.TextTransparency = 0.550
-    TextLabel.TextWrapped = true
-    
-    
-    
-    
-    TextBox:GetPropertyChangedSignal("Text"):Connect(function(text)
-        if TextBox.Text == "" then
-            TextLabel.Text =  "In Put Your Key"
-        else
-            TextLabel.Text = TextBox.Text
-        end
-    end)
-    
-    Checkkey.MouseButton1Down:Connect(function() 
-        if TextBox and TextBox.Text then
-            
-            local Verify = verifyKey(TextBox.Text)
-            if Verify then
-                loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))()
-            else
-                print("Key Is in valid")
-            end 
-        end	
-    end)
-    
-    Getkey.MouseButton1Down:Connect(function() 
-        copyLink()
-    end)
-    
-    Exit.MouseButton1Down:Connect(function()
-        if ScreenGui then
-            ScreenGui:Destroy()
-        end
-    end)
-    
-    
-    minimize.MouseButton1Down:Connect(function()
-        if ScreenGui then
-            ScreenGui.Enabled = false
-        end
-    end)
-    
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ 
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 400, 0, 300)
+Frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+Frame.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+Frame.BorderSizePixel = 0
+Frame.Active = true
+Frame.Draggable = true
+Frame.Parent = ScreenGui
+ 
+local FrameCorner = Instance.new("UICorner")
+FrameCorner.CornerRadius = UDim.new(0, 10)
+FrameCorner.Parent = Frame
+ 
+local Close = Instance.new("TextButton")
+Close.Size = UDim2.new(0, 40, 0, 40)
+Close.Position = UDim2.new(1, -40, 0, 0)
+Close.BackgroundTransparency = 1
+Close.Text = "×"
+Close.TextScaled = true
+Close.TextColor3 = Color3.fromRGB(150, 150, 150)
+Close.Parent = Frame
+Close.MouseButton1Click:Connect(function()
+   ScreenGui:Destroy()
+end)
+ 
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 30)
+Title.Position = UDim2.new(0, 0, 0.05, 0)
+Title.Text = "Key System"
+Title.TextSize = 18
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundTransparency = 1
+Title.Parent = Frame
+ 
+local Instructions = Instance.new("TextLabel")
+Instructions.Size = UDim2.new(1, 0, 0, 30)
+Instructions.Position = UDim2.new(0, 0, 0.2, 0)
+Instructions.Text = "Enter Key To Access The Script"
+Instructions.TextSize = 13
+Instructions.TextColor3 = Color3.fromRGB(150, 150, 150)
+Instructions.BackgroundTransparency = 1
+Instructions.Parent = Frame
+ 
+local TextBox = Instance.new("TextBox")
+TextBox.Size = UDim2.new(0.8, 0, 0.2, 0)
+TextBox.Position = UDim2.new(0.1, 0, 0.4, 0)
+TextBox.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+TextBox.PlaceholderText = "Enter Key..."
+TextBox.Text = ""
+TextBox.TextSize = 18
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.Parent = Frame
+ 
+local TextBoxCorner = Instance.new("UICorner")
+TextBoxCorner.CornerRadius = UDim.new(0, 5)
+TextBoxCorner.Parent = TextBox
+ 
+local GetKey = Instance.new("TextButton")
+GetKey.Size = UDim2.new(0.35, 0, 0.15, 0)
+GetKey.Position = UDim2.new(0.1, 0, 0.7, 0)
+GetKey.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+GetKey.Text = "Get Key"
+GetKey.TextSize = 18
+GetKey.TextColor3 = Color3.fromRGB(150, 150, 150)
+GetKey.Parent = Frame
+ 
+local GetKeyCorner = Instance.new("UICorner")
+GetKeyCorner.CornerRadius = UDim.new(0, 5)
+GetKeyCorner.Parent = GetKey
+ 
+local CheckKey = Instance.new("TextButton")
+CheckKey.Size = UDim2.new(0.35, 0, 0.15, 0)
+CheckKey.Position = UDim2.new(0.55, 0, 0.7, 0)
+CheckKey.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+CheckKey.Text = "Check Key"
+CheckKey.TextSize = 18
+CheckKey.TextColor3 = Color3.fromRGB(150, 150, 150)
+CheckKey.Parent = Frame
+ 
+local CheckKeyCorner = Instance.new("UICorner")
+CheckKeyCorner.CornerRadius = UDim.new(0, 5)
+CheckKeyCorner.Parent = CheckKey
+ 
+GetKey.MouseButton1Click:Connect(function()
+   setclipboard("Your Way How To Get The Key")
+end)
+ 
+local function validateKey(key)
+    return key == "Key" -- Replace this with your key
+end
+ 
+CheckKey.MouseButton1Click:Connect(function()
+    local enteredKey = TextBox.Text
+    if validateKey(enteredKey) then
+        TextBox.PlaceholderText = "Correct Key!"
+        TextBox.Text = ""
+        wait(1)
+        ScreenGui:Destroy()
+ 
+-- Put Your Script Here
+loadstring(game:HttpGet('https://pastebin.com/raw/YSL3xKYU'))()
+ 
+    else
+        TextBox.PlaceholderText = "Invalid key. Try again."
+        TextBox.Text = ""
+        wait(1)
+        TextBox.PlaceholderText = "Enter Key..."
+        TextBox.Text = ""
+    end
 end)
