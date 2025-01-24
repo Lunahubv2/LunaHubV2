@@ -407,12 +407,7 @@ task.spawn(function()
             local Verify = verifyKey(TextBox.Text)
             if Verify then
                 loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))()       
-            else
-                OrionLib:MakeNotification({
-                Name = "Correct Key!",
-                Content = "The key you entered is Valid.",
-                Image = "rbxassetid://4483345998",
-                Time = 5
+            else 
             end 
         end	
     end)
@@ -420,12 +415,6 @@ task.spawn(function()
     
     Getkey.MouseButton1Down:Connect(function() 
         copyLink()
-                OrionLib:MakeNotification({
-                Name = "Copied Link!",
-                Content = "Success Copied Link.",
-                Image = "rbxassetid://4483345998",
-                Time = 5
-            })
 end)
     
     local Verify = verifyKey(TextBox.Text)
