@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local script = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/API/booster.lua')))()
 local service = 362;  -- your service id, this is used to identify your service.
 local secret = "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad";  -- make sure to obfuscate this if you want to ensure security.
 local useNonce = true;  -- use a nonce to prevent replay attacks and request tampering.
