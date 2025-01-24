@@ -1,3 +1,4 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local service = 362;  -- your service id, this is used to identify your service.
 local secret = "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad";  -- make sure to obfuscate this if you want to ensure security.
 local useNonce = true;  -- use a nonce to prevent replay attacks and request tampering.
@@ -399,7 +400,7 @@ task.spawn(function()
             TextLabel.Text = TextBox.Text
         end
     end)
-    
+        
     Checkkey.MouseButton1Down:Connect(function() 
         if TextBox and TextBox.Text then
                          
@@ -407,14 +408,25 @@ task.spawn(function()
             if Verify then
                 loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))()       
             else
-                print("Key Is in valid")
+                OrionLib:MakeNotification({
+                Name = "Correct Key!",
+                Content = "The key you entered is Valid.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
             end 
         end	
     end)
+      
     
     Getkey.MouseButton1Down:Connect(function() 
         copyLink()
-    end)
+                OrionLib:MakeNotification({
+                Name = "Copied Link!",
+                Content = "Success Copied Link.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+end)
     
     local Verify = verifyKey(TextBox.Text)
         if Verify then
