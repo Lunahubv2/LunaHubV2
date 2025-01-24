@@ -1,4 +1,3 @@
-
 local service =362;--Set your Platoboost Id 
 local secret = "d4a12638-daa3-4728-ab9c-f1c5543ca55d"; --Set Your Platoboost Api key
 local useNonce = true; 
