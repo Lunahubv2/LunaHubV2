@@ -402,9 +402,9 @@ task.spawn(function()
             
             local Verify = verifyKey(TextBox.Text)
             if Verify then
-                loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))()
-            else   
                 ScreenGui:Destroy()
+            else   
+            
             end 
         end	
     end)
