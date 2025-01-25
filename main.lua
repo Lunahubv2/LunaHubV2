@@ -402,9 +402,9 @@ task.spawn(function()
             
             local Verify = verifyKey(TextBox.Text)
             if Verify then
-                loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/main/source.lua")()
+                loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))()
             else Verify then
-                ScreenGui:Destroy()
+                print("The Key is Valid!")
             end 
         end	
     end)
@@ -413,8 +413,8 @@ task.spawn(function()
         copyLink()
     end)
     
-    Exit.MouseButton1Down:Connect(function()
-        if ScreenGui then
+     local Verify = verifyKey(TextBox.Text)
+        if Verify then
             ScreenGui:Destroy()
         end
     end)
