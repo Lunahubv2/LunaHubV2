@@ -402,7 +402,7 @@ task.spawn(function()
             
             local Verify = verifyKey(TextBox.Text)
             if Verify then
-                loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))()
+                loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/main/source.lua")()
             else Verify then
                 ScreenGui:Destroy()
             end 
