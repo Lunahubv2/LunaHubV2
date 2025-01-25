@@ -403,8 +403,9 @@ task.spawn(function()
             local Verify = verifyKey(TextBox.Text)
             if Verify then
                 loadstring(game:HttpGet("https://pastebin.com/raw/DTrES0c6"))()
-            else Verify then
-                print("The Key is Valid!")
+            local Verify = verifyKey(TextBox.Text)
+            if Verify then
+                ScreenGui:Destroy()
             end 
         end	
     end)
@@ -413,8 +414,8 @@ task.spawn(function()
         copyLink()
     end)
     
-     local Verify = verifyKey(TextBox.Text)
-        if Verify then
+     Exit.MouseButton1Down:Connect(function()
+        if ScreenGui then
             ScreenGui:Destroy()
         end
     end)
