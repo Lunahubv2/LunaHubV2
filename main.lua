@@ -277,8 +277,8 @@ verifyButton.MouseButton1Click:Connect(function()
     local success = verifyKey(key);
 
     if success then
-        print("key is valid.");
+        loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/main/source.lua")()
     else
-        print("key is invalid.");
+        ScreenGui:Destroy()
     end
 end)
