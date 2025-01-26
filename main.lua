@@ -427,7 +427,7 @@ task.spawn(function()
       end)        
     end)
 
-verifyButton.MouseButton1Click:Connect(function()
+Checkkey.MouseButton1Down:Connect(function()
     local key = keyBox.Text;
     local success = verifyKey(key);
 
