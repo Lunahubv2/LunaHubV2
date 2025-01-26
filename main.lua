@@ -427,12 +427,12 @@ task.spawn(function()
       end)        
     end)
 
-Checkkey.MouseButton1Down:Connect(function()
-    if TextBox and TextBox.Text then
-            
-    local Verify = verifyKey(key);       
+verifyButton.MouseButton1Click:Connect(function()
+    local key = TextBox.Text;
+    local Verify = verifyKey(TextBox.Text);
+
     if Verify then
-        ScreenGui:Destroy()
+        print("key is valid.");
     else
         print("key is invalid.");
     end
