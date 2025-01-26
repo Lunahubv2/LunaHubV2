@@ -334,7 +334,7 @@ task.spawn(function()
     Getkey.Position = UDim2.new(0.317548752, 0, 0.523809552, 0)
     Getkey.Size = UDim2.new(0, 130, 0, 32)
     Getkey.Font = Enum.Font.SourceSans
-    Getkey.Text = "Copy Link (Key)"
+    Getkey.Text = "Get Key"
     Getkey.TextColor3 = Color3.fromRGB(255, 255, 255)
     Getkey.TextScaled = true
     Getkey.TextSize = 14.000
@@ -378,7 +378,7 @@ task.spawn(function()
     TextLabel.Size = UDim2.new(0, 304, 0, 42)
     TextLabel.ZIndex = 2
     TextLabel.Font = Enum.Font.SourceSans
-    TextLabel.Text = "In Put Your Key"
+    TextLabel.Text = "Please Enter Your Valid Key!"
     TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
     TextLabel.TextScaled = true
     TextLabel.TextSize = 14.000
