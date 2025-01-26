@@ -402,7 +402,8 @@ task.spawn(function()
             
             local Verify = verifyKey(TextBox.Text)
             if Verify then      
-                loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/keychecker.lua")()
+                loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/keychecker.lua")() then
+                ScreenGui:Destroy()        
             else   
                 Print("The Key is Incorrect please try again")
             end 
