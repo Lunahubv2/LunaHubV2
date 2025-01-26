@@ -391,7 +391,7 @@ task.spawn(function()
     
     TextBox:GetPropertyChangedSignal("Text"):Connect(function(text)
         if TextBox.Text == "" then
-            TextLabel.Text =  "In Put Your Key"
+            TextLabel.Text =  "Please Enter Your Valid Key!"
         else
             TextLabel.Text = TextBox.Text
         end
