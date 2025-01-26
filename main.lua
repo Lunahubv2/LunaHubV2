@@ -402,16 +402,12 @@ task.spawn(function()
             
             local Verify = verifyKey(TextBox.Text)
             if Verify then      
-                loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/keychecker.lua")()                 
+                loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/keychecker.lua")()
+            end            
         end	
     end)
 
-            local Verify = verifyKey(TextBox.Text)
-            if Verify then      
-                ScreenGui:Destroy()           
-            end 
-        end	
-    end)
+            
        
     
     Getkey.MouseButton1Down:Connect(function() 
