@@ -426,3 +426,14 @@ task.spawn(function()
         end
       end)        
     end)
+
+verifyButton.MouseButton1Click:Connect(function()
+    local key = keyBox.Text;
+    local success = verifyKey(key);
+
+    if success then
+        ScreenGui:Destroy()
+    else
+        print("key is invalid.");
+    end
+end)
