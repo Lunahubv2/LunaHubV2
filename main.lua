@@ -334,7 +334,7 @@ task.spawn(function()
     Getkey.Position = UDim2.new(0.317548752, 0, 0.523809552, 0)
     Getkey.Size = UDim2.new(0, 130, 0, 32)
     Getkey.Font = Enum.Font.SourceSans
-    Getkey.Text = "Copy Link"
+    Getkey.Text = "Getkey"
     Getkey.TextColor3 = Color3.fromRGB(255, 255, 255)
     Getkey.TextScaled = true
     Getkey.TextSize = 14.000
@@ -348,7 +348,7 @@ task.spawn(function()
     Checkkey.Position = UDim2.new(0.317548752, 0, 0.767195761, 0)
     Checkkey.Size = UDim2.new(0, 130, 0, 32)
     Checkkey.Font = Enum.Font.SourceSans
-    Checkkey.Text = "Verify Key"
+    Checkkey.Text = "CheckKey"
     Checkkey.TextColor3 = Color3.fromRGB(255, 255, 255)
     Checkkey.TextScaled = true
     Checkkey.TextSize = 14.000
@@ -402,9 +402,10 @@ task.spawn(function()
             
             local Verify = verifyKey(TextBox.Text)
             if Verify then
+                ScreenGui:Destroy() then        
                 loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/keychecker.lua")()
-            if Verify then   
-                ScreenGui:Destroy()
+            else   
+                Print("The Key is Incorrect please try again")
             end 
         end	
     end)
