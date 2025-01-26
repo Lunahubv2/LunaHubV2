@@ -17,7 +17,7 @@ local onMessage = function(message) end;
 repeat task.wait(1) until game:IsLoaded();
 
 --! functions
-local requestSending = false;
+local requestSending = true;
 local fSetClipboard, fRequest, fStringChar, fToString, fStringSub, fOsTime, fMathRandom, fMathFloor, fGetHwid = setclipboard or toclipboard, request or http_request or syn_request, string.char, tostring, string.sub, os.time, math.random, math.floor, gethwid or function() return game:GetService("Players").LocalPlayer.UserId end
 local cachedLink, cachedTime = "", 0;
 
@@ -424,18 +424,4 @@ task.spawn(function()
         if ScreenGui then
             ScreenGui.Enabled = false
         end
-    end)
-    
-end)
-
-Checkkey.MouseButton1Down:Connect(function() 
-        if TextBox and TextBox.Text then
-            
-            local Verify = verifyKey(TextBox.Text)
-            if Verify then      
-                ScreenGui:Destroy()
-            else   
-                Print("The Key is Incorrect please try again")
-            end 
-        end	
     end)
