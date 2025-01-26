@@ -401,15 +401,13 @@ task.spawn(function()
         if TextBox and TextBox.Text then
             
             local Verify = verifyKey(TextBox.Text)
-            if Verify then
-                        ScreenGui:Destroy() then
+            if Verify then      
                 loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/keychecker.lua")()
-            end            
+            else   
+                Print("The Key is Incorrect please try again")
+            end 
         end	
     end)
-
-            
-       
     
     Getkey.MouseButton1Down:Connect(function() 
         copyLink()
@@ -426,6 +424,5 @@ task.spawn(function()
         if ScreenGui then
             ScreenGui.Enabled = false
         end
-    end) 
-end)
-   
+      end)        
+    end)
