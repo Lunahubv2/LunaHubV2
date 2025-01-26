@@ -401,7 +401,8 @@ task.spawn(function()
         if TextBox and TextBox.Text then
             
             local Verify = verifyKey(TextBox.Text)
-            if Verify then      
+            if Verify then
+                        ScreenGui:Destroy() then
                 loadstring(game:HttpGet"https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/keychecker.lua")()
             end            
         end	
