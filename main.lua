@@ -17,7 +17,7 @@ local onMessage = function(message) end;
 repeat task.wait(1) until game:IsLoaded();
 
 --! functions
-local requestSending = true;
+local requestSending = false;
 local fSetClipboard, fRequest, fStringChar, fToString, fStringSub, fOsTime, fMathRandom, fMathFloor, fGetHwid = setclipboard or toclipboard, request or http_request or syn_request, string.char, tostring, string.sub, os.time, math.random, math.floor, gethwid or function() return game:GetService("Players").LocalPlayer.UserId end
 local cachedLink, cachedTime = "", 0;
 
