@@ -419,21 +419,12 @@ task.spawn(function()
             ScreenGui:Destroy()
         end
     end)
-
-   Checkkey.MouseButton1Down:Connect(function() 
-        if TextBox and TextBox.Text then
-           local Verify = verifyKey(TextBox.Text)
-           if Verify then
-                ScreenGui:Destroy()
-            end
-        end)
-    end)
     
     
     minimize.MouseButton1Down:Connect(function()
         if ScreenGui then
             ScreenGui.Enabled = false
         end
-      end)        
-    end)
- end)
+    end) 
+end)
+   
