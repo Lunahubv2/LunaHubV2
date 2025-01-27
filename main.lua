@@ -130,7 +130,7 @@ local response = KeySystem:Init({
     Link = copyLink();
        end)
     Discord = "test",
-    SaveKey = false,
+    SaveKey = true,
     Verify = function(key)
         KeyValid = verifyKey(key) -- Store key validity
         return KeyValid
