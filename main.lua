@@ -104,26 +104,6 @@ local function copyLink()
     onMessage("Link copied to clipboard: " .. linkToCopy)
 end
 
--- Button functionality
-local copyButton = script.Parent:WaitForChild("copyButton") -- Adjust path accordingly
-local verifyButton = script.Parent:WaitForChild("verifyButton") -- Adjust path accordingly
-local keyBox = script.Parent:WaitForChild("keyBox") -- Adjust path accordingly
-
-copyButton.MouseButton1Click:Connect(function()
-    copyLink()
-end)
-
-verifyButton.MouseButton1Click:Connect(function()
-    local key = keyBox.Text  -- Get the key from the text box
-    local success = verifyKey(key)
-
-    if success then
-        print("Key is valid.")
-    else
-        print("Key is invalid.")
-    end
-end)
-
 -- Initialize Key System (if needed)
 local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
 local KeyValid = false
@@ -132,7 +112,7 @@ local response = KeySystem:Init({
     Debug = false,
     Title = "Luna Hub | Key System",
     Description = nil,
-    Link = function(key)
+    Link = function()
         copyLink() -- Call copyLink function when key is validated
     end,
     Discord = "test",
