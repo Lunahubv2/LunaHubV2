@@ -421,14 +421,3 @@ end
         end
       end)        
     end)
-
-Checkkey.MouseButton1Down:Connect(function()
-    local key = TextBox.Text;
-    local Verify = verifyKey(TextBox.Text);
-
-    if Verify then
-        print("key is valid.");
-    else
-        print("key is invalid.");
-    end
-end)
