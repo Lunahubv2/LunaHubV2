@@ -386,9 +386,6 @@ task.spawn(function()
     TextLabel.TextTransparency = 0.550
     TextLabel.TextWrapped = true
     
-    
-    
-    
     TextBox:GetPropertyChangedSignal("Text"):Connect(function(text)
         if TextBox.Text == "" then
             TextLabel.Text =  "Please Enter Your Valid Key!"
@@ -400,17 +397,15 @@ task.spawn(function()
     Checkkey.MouseButton1Down:Connect(function() 
         if TextBox and TextBox.Text then
             
-   local TextBox = script.Parent:WaitForChild("TextBox") -- Assuming you have a TextBox in your GUI
-   local Verify = verifyKey(TextBox.Text)
 
-if Verify then
+    local Verify = verifyKey(TextBox.Text)
+
+    if Verify then
     -- If the key is correct, execute the script
     loadstring(game:HttpGet("https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/source.lua"))()
-
     -- Now, assuming your ScreenGui is the parent of this script, destroy it
     local ScreenGui = script.Parent
     ScreenGui:Destroy() -- This will remove the ScreenGui from the player's screen
-
 else
     -- If the key is incorrect, print a message
     print("The Key is Incorrect, please try again")
