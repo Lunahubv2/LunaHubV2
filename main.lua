@@ -179,6 +179,7 @@ local response = KeySystem:Init({
 })
 
 if not response or not KeyValid then 
+print("Key is invalid! please try agian!...")
     return 
 end
 
