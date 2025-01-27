@@ -177,8 +177,8 @@ local response = KeySystem:Init({
     Title = "Luna Hub | Key System",
     Description = nil,
     Link = function(key)
-        copyLink() -- Call copyLink function when called
-    end,
+        copyLink(); -- Call copyLink function when called
+    end)
     Discord = "test",
     SaveKey = false,
     Verify = function(key)
