@@ -17,74 +17,65 @@ local fRequest = request or http_request or syn_request
 local fOsTime = os.time
 local fMathRandom = math.random
 local fGetHwid = gethwid or function() return game.Players.LocalPlayer.UserId end
+local cachedLink, cachedTime = "", 0 -- Variables for caching
 
---! pick host
-local host = "https://api.platoboost.com";
+-- Pick host
+local host = "https://api.platoboost.com"
 local hostResponse = fRequest({
     Url = host .. "/public/connectivity",
     Method = "GET"
-});
-if hostResponse.StatusCode ~= 200 or hostResponse.StatusCode ~= 429 then
-    host = "https://api.platoboost.net";
+})
+if hostResponse.StatusCode ~= 200 then
+    host = "https://api.platoboost.net"
 end
 
---!optimize 2
+-- Function to encode data to JSON
+local function lEncode(data)
+    return game:GetService("HttpService"):JSONEncode(data)
+end
+
+-- Function to decode JSON data
+local function lDecode(data)
+    return game:GetService("HttpService"):JSONDecode(data)
+end
+
+-- Cache Link Function
 function cacheLink()
-    if cachedTime + (10*60) < fOsTime() then
+    if (not cachedLink or cachedTime + (10 * 60) < fOsTime()) then
         local response = fRequest({
             Url = host .. "/public/start",
             Method = "POST",
             Body = lEncode({
                 service = service,
-                identifier = lDigest(fGetHwid())
+                identifier = fGetHwid()
             }),
             Headers = {
                 ["Content-Type"] = "application/json"
             }
-        });
+        })
 
         if response.StatusCode == 200 then
-            local decoded = lDecode(response.Body);
+            local decoded = lDecode(response.Body)
 
-            if decoded.success == true then
-                cachedLink = decoded.data.url;
-                cachedTime = fOsTime();
-                return true, cachedLink;
+            if decoded.success then
+                cachedLink = decoded.data.url
+                cachedTime = fOsTime()
+                return true, cachedLink
             else
-                onMessage(decoded.message);
-                return false, decoded.message;
+                onMessage(decoded.message)
+                return false, decoded.message
             end
         elseif response.StatusCode == 429 then
-            local msg = "you are being rate limited, please wait 20 seconds and try again.";
-            onMessage(msg);
-            return false, msg;
+            local msg = "You are being rate limited, please wait 20 seconds and try again."
+            onMessage(msg)
+            return false, msg
         end
 
-        local msg = "Failed to cache link.";
-        onMessage(msg);
-        return false, msg;
+        local msg = "Failed to cache link."
+        onMessage(msg)
+        return false, msg
     else
-        return true, cachedLink;
-    end
-end
-
---!optimize 1
-for _ = 1, 5 do
-    local oNonce = generateNonce();
-    task.wait(0.2)
-    if generateNonce() == oNonce then
-        local msg = "platoboost nonce error.";
-        onMessage(msg);
-        error(msg);
-    end
-end
-
---!optimize 2
-local copyLink = function()
-    local success, link = cacheLink();
-    
-    if success then
-        fSetClipboard(link);
+        return true, cachedLink
     end
 end
 
@@ -100,10 +91,10 @@ end
 -- Redeem key function
 local function redeemKey(key)
     local nonce = generateNonce()
-    local endpoint = "https://api.platoboost.com/public/redeem/" .. tostring(service)
+    local endpoint = host .. "/public/redeem/" .. tostring(service)
 
     local body = {
-        identifier = lDigest(fGetHwid()), -- Generate HWID identifier
+        identifier = fGetHwid(), -- Generate HWID identifier
         key = key,
         nonce = useNonce and nonce or nil
     }
@@ -130,8 +121,6 @@ local function redeemKey(key)
     end
 end
 
-
-
 -- Verify key function
 local function verifyKey(key)
     if requestSending then
@@ -142,7 +131,7 @@ local function verifyKey(key)
     end
 
     local nonce = generateNonce()
-    local endpoint = "https://api.platoboost.com/public/whitelist/" .. tostring(service) .. "?identifier=" .. lDigest(fGetHwid()) .. "&key=" .. key
+    local endpoint = host .. "/public/whitelist/" .. tostring(service) .. "?identifier=" .. fGetHwid() .. "&key=" .. key
 
     if useNonce then
         endpoint = endpoint .. "&nonce=" .. nonce
@@ -169,14 +158,17 @@ local function verifyKey(key)
     end
 end
 
--- Copy link function (to be called when link is validated)
+-- Copy link function
 local function copyLink()
-    local linkToCopy = "https://example.com/some-link"  -- Specify the link you want to copy
-    setclipboard(linkToCopy) -- Copy link to clipboard
-    onMessage("Link copied to clipboard: " .. linkToCopy)
+    local success, link = cacheLink()
+    
+    if success then
+        setclipboard(link)
+        onMessage("Link copied to clipboard: " .. link)
+    end
 end
 
--- Initialize Key System (if needed)
+-- Initialize Key System
 local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
 local KeyValid = false
 
@@ -185,7 +177,7 @@ local response = KeySystem:Init({
     Title = "Luna Hub | Key System",
     Description = nil,
     Link = function()
-        copyLink() -- Call copyLink function when key is validated
+        copyLink() -- Call copyLink function when called
     end,
     Discord = "test",
     SaveKey = false,
