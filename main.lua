@@ -16,7 +16,12 @@ local requestSending = false
 local fRequest = request or http_request or syn_request
 local fOsTime = os.time
 local fMathRandom = math.random
-local fGetHwid = gethwid,f function() return game.Players.LocalPlayer.UserId end
+
+-- Function to get User ID
+local function getUserId()
+    return game.Players.LocalPlayer.UserId -- Use User ID as identifier
+end
+
 local cachedLink, cachedTime = "", 0 -- Variables for caching
 
 -- Pick host
@@ -47,7 +52,7 @@ function cacheLink()
             Method = "POST",
             Body = lEncode({
                 service = service,
-                identifier = fGetHwid()
+                identifier = getUserId() -- Use User ID here
             }),
             Headers = {
                 ["Content-Type"] = "application/json"
@@ -71,7 +76,7 @@ function cacheLink()
             return false, msg
         end
 
-        local msg = "Failed to cache link."
+        local msg = "Failed to cache link. Status Code: " .. response.StatusCode
         onMessage(msg)
         return false, msg
     else
@@ -94,7 +99,7 @@ local function redeemKey(key)
     local endpoint = host .. "/public/redeem/" .. tostring(service)
 
     local body = {
-        identifier = fGetHwid(), -- Generate HWID identifier
+        identifier = getUserId(), -- Use User ID as identifier here
         key = key,
         nonce = useNonce and nonce or nil
     }
@@ -131,7 +136,7 @@ local function verifyKey(key)
     end
 
     local nonce = generateNonce()
-    local endpoint = host .. "/public/whitelist/" .. tostring(service) .. "?identifier=" .. fGetHwid() .. "&key=" .. key
+    local endpoint = host .. "/public/whitelist/" .. tostring(service) .. "?identifier=" .. getUserId() .. "&key=" .. key
 
     if useNonce then
         endpoint = endpoint .. "&nonce=" .. nonce
@@ -158,6 +163,18 @@ local function verifyKey(key)
     end
 end
 
+-- Copy link function
+local function copyLink()
+    local success, link = cacheLink()
+    
+    if success then
+        setclipboard(link)
+        onMessage("Link copied to clipboard: " .. link)
+    else
+        onMessage("Failed to copy link.")
+    end
+end
+
 -- Initialize Key System
 local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
 local KeyValid = false
@@ -166,14 +183,9 @@ local response = KeySystem:Init({
     Debug = false,
     Title = "Luna Hub | Key System",
     Description = nil,
-    Link = function(key)
-            local success, link = cacheLink()
-
-            if success then
-            setclipboard(link)
-        onMessage("Link copied to clipboard: " .. link)
-    end
-end
+    Link = function()
+        copyLink() -- Call copyLink function when called
+    end,
     Discord = "test",
     SaveKey = false,
     Verify = function(key)
@@ -183,7 +195,10 @@ end
     GuiParent = game.CoreGui
 })
 
-if not response or not KeyValid then return end
+if not response or not KeyValid then 
+    onMessage("Key System initialization failed.")
+    return 
+end
 
 -- If the key is valid, proceed with additional script actions
 print("Key is valid! Proceeding with the script...")
