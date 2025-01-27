@@ -29,17 +29,6 @@ local function generateNonce()
     return str
 end
 
---!optimize 1
-for _ = 1, 5 do
-    local oNonce = generateNonce();
-    task.wait(0.2)
-    if generateNonce() == oNonce then
-        local msg = "platoboost nonce error.";
-        onMessage(msg);
-        error(msg);
-    end
-end
-
 --!optimize 2
 local copyLink = function()
     local success, link = cacheLink();
@@ -127,7 +116,8 @@ local response = KeySystem:Init({
     Debug = false,
     Title = "Luna Hub | Key System",
     Description = nil,
-    Link = copyLink();
+    Link = function(key)
+        copyLink();
        end)
     Discord = "test",
     SaveKey = true,
