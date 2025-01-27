@@ -178,7 +178,7 @@ local response = KeySystem:Init({
     Description = nil,
     Link = function(key)
         copyLink(); -- Call copyLink function when called
-    end)
+            
     Discord = "test",
     SaveKey = false,
     Verify = function(key)
