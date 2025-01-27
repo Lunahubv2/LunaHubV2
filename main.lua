@@ -29,6 +29,26 @@ local function generateNonce()
     return str
 end
 
+--!optimize 1
+for _ = 1, 5 do
+    local oNonce = generateNonce();
+    task.wait(0.2)
+    if generateNonce() == oNonce then
+        local msg = "platoboost nonce error.";
+        onMessage(msg);
+        error(msg);
+    end
+end
+
+--!optimize 2
+local copyLink = function()
+    local success, link = cacheLink();
+    
+    if success then
+        fSetClipboard(link);
+    end
+end
+
 -- Redeem key function
 local function redeemKey(key)
     local nonce = generateNonce()
