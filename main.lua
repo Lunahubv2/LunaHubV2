@@ -159,7 +159,7 @@ local function verifyKey(key)
 end
 
 -- Copy link function
-local function copyLink()
+local function(key)
     local success, link = cacheLink()
     
     if success then
