@@ -177,7 +177,7 @@ local response = KeySystem:Init({
     Title = "Luna Hub | Key System",
     Description = nil,
     Discord = "test",
-    SaveKey = false,
+    SaveKey = true,
     Verify = function(key)
         KeyValid = verifyKey(key) -- Store key validity
         return KeyValid
