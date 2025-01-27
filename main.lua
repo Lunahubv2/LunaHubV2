@@ -158,16 +158,6 @@ local function verifyKey(key)
     end
 end
 
--- Copy link function
-local function(key)
-    local success, link = cacheLink()
-    
-    if success then
-        setclipboard(link)
-        onMessage("Link copied to clipboard: " .. link)
-    end
-end
-
 -- Initialize Key System
 local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
 local KeyValid = false
@@ -176,7 +166,14 @@ local response = KeySystem:Init({
     Debug = false,
     Title = "Luna Hub | Key System",
     Description = nil,
-    Link = copylink()
+    Link = function(key)
+            local success, link = cacheLink()
+
+            if success then
+            setclipboard(link)
+        onMessage("Link copied to clipboard: " .. link)
+    end
+end
     Discord = "test",
     SaveKey = false,
     Verify = function(key)
