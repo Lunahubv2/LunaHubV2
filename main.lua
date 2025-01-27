@@ -16,7 +16,7 @@ local requestSending = false
 local fRequest = request or http_request or syn_request
 local fOsTime = os.time
 local fMathRandom = math.random
-local fGetHwid = gethwid or function() return game.Players.LocalPlayer.UserId end
+local fGetHwid = gethwid,f function() return game.Players.LocalPlayer.UserId end
 local cachedLink, cachedTime = "", 0 -- Variables for caching
 
 -- Pick host
