@@ -16,7 +16,7 @@ local requestSending = false
 local fRequest = request or http_request or syn_request
 local fOsTime = os.time
 local fMathRandom = math.random
-local fGetHwid = gethwid,f function() return game.Players.LocalPlayer.UserId end
+local fGetHwid = gethwid or function() return game.Players.LocalPlayer.UserId end
 local cachedLink, cachedTime = "", 0 -- Variables for caching
 
 -- Pick host
@@ -68,12 +68,12 @@ function cacheLink()
         elseif response.StatusCode == 429 then
             local msg = "You are being rate limited, please wait 20 seconds and try again."
             onMessage(msg)
-            return false, msg
+            task.wait(20) -- Wait before retrying
+            return cacheLink() -- Retry caching the link
+        else
+            onMessage("Failed to cache link: " .. response.StatusCode .. " - " .. response.Body)
+            return false, "Failed to cache link."
         end
-
-        local msg = "Failed to cache link."
-        onMessage(msg)
-        return false, msg
     else
         return true, cachedLink
     end
@@ -116,7 +116,7 @@ local function redeemKey(key)
             return false
         end
     else
-        onMessage("Error redeeming key: " .. response.StatusCode)
+        onMessage("Error redeeming key: " .. response.StatusCode .. " - " .. response.Body)
         return false
     end
 end
@@ -153,7 +153,7 @@ local function verifyKey(key)
             return redeemKey(key) -- Try redeeming the key if it is not valid
         end
     else
-        onMessage("Error verifying key: " .. response.StatusCode)
+        onMessage("Error verifying key: " .. response.StatusCode .. " - " .. response.Body)
         return false
     end
 end
@@ -166,7 +166,9 @@ local response = KeySystem:Init({
     Debug = false,
     Title = "Luna Hub | Key System",
     Description = nil,
-    Link = function(key)      
+    Link = function(key)
+            Copylink()
+        end
     Discord = "test",
     SaveKey = false,
     Verify = function(key)
@@ -176,9 +178,10 @@ local response = KeySystem:Init({
     GuiParent = game.CoreGui
 })
 
-if not response or not KeyValid then return end
+if not response or not KeyValid then 
+    return 
+end
 
 -- If the key is valid, proceed with additional script actions
 print("Key is valid! Proceeding with the script...")
-
 -- Your additional functionalities can be added here.
