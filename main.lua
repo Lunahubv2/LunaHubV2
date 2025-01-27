@@ -107,7 +107,8 @@ local response = KeySystem:Init({
     Debug = false,
     Title = "Luna Hub | Key System",
     Description = nil,
-    Link = copyLink(), -- Optional link for your GUI
+    Link = copyLink();
+       end)
     Discord = "test",
     SaveKey = false,
     Verify = function(key)
