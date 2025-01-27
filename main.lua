@@ -1,5 +1,3 @@
-
-
 -- Platoboost configuration
 local service = 362  -- Your service ID
 local secret = "your_secret_key_here"  -- Your secret key for security
@@ -27,15 +25,6 @@ local function generateNonce()
         str = str .. string.char(fMathRandom(97, 122)) -- Generate random lowercase letters
     end
     return str
-end
-
---!optimize 2
-local copyLink = function()
-    local success, link = cacheLink();
-    
-    if success then
-        fSetClipboard(link);
-    end
 end
 
 -- Redeem key function
@@ -89,7 +78,7 @@ local function verifyKey(key)
 
     local response = fRequest({
         Url = endpoint,
-        Method = "GET",
+        Method = "GET"
     })
 
     requestSending = false
@@ -112,20 +101,28 @@ end
 local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
 local KeyValid = false
 
+-- Copy link function (to be called when link is validated)
+local function copyLink()
+    -- Replace with the actual link you want to copy
+    local linkToCopy = "https://example.com/some-link" 
+    setclipboard(linkToCopy) -- Copy link to clipboard
+    onMessage("Link copied to clipboard: " .. linkToCopy)
+end
+
 local response = KeySystem:Init({
     Debug = false,
     Title = "Luna Hub | Key System",
     Description = nil,
     Link = function(key)
-        copyLink();
-       end)
+        copyLink() -- Call copyLink function when key is validated
+    end,
     Discord = "test",
-    SaveKey = true,
+    SaveKey = false,
     Verify = function(key)
         KeyValid = verifyKey(key) -- Store key validity
         return KeyValid
     end,
-    GuiParent = game.CoreGui,
+    GuiParent = game.CoreGui
 })
 
 if not response or not KeyValid then return end
