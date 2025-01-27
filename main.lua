@@ -18,6 +18,76 @@ local fOsTime = os.time
 local fMathRandom = math.random
 local fGetHwid = gethwid or function() return game.Players.LocalPlayer.UserId end
 
+--! pick host
+local host = "https://api.platoboost.com";
+local hostResponse = fRequest({
+    Url = host .. "/public/connectivity",
+    Method = "GET"
+});
+if hostResponse.StatusCode ~= 200 or hostResponse.StatusCode ~= 429 then
+    host = "https://api.platoboost.net";
+end
+
+--!optimize 2
+function cacheLink()
+    if cachedTime + (10*60) < fOsTime() then
+        local response = fRequest({
+            Url = host .. "/public/start",
+            Method = "POST",
+            Body = lEncode({
+                service = service,
+                identifier = lDigest(fGetHwid())
+            }),
+            Headers = {
+                ["Content-Type"] = "application/json"
+            }
+        });
+
+        if response.StatusCode == 200 then
+            local decoded = lDecode(response.Body);
+
+            if decoded.success == true then
+                cachedLink = decoded.data.url;
+                cachedTime = fOsTime();
+                return true, cachedLink;
+            else
+                onMessage(decoded.message);
+                return false, decoded.message;
+            end
+        elseif response.StatusCode == 429 then
+            local msg = "you are being rate limited, please wait 20 seconds and try again.";
+            onMessage(msg);
+            return false, msg;
+        end
+
+        local msg = "Failed to cache link.";
+        onMessage(msg);
+        return false, msg;
+    else
+        return true, cachedLink;
+    end
+end
+
+--!optimize 1
+for _ = 1, 5 do
+    local oNonce = generateNonce();
+    task.wait(0.2)
+    if generateNonce() == oNonce then
+        local msg = "platoboost nonce error.";
+        onMessage(msg);
+        error(msg);
+    end
+end
+
+--!optimize 2
+local copyLink = function()
+    local success, link = cacheLink();
+    
+    if success then
+        fSetClipboard(link);
+    end
+end
+
 -- Nonce generation
 local function generateNonce()
     local str = ""
@@ -59,6 +129,8 @@ local function redeemKey(key)
         return false
     end
 end
+
+
 
 -- Verify key function
 local function verifyKey(key)
