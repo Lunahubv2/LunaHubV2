@@ -163,13 +163,13 @@ local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/Oop
 local KeyValid = false
 
 local response = KeySystem:Init({
-    Debug=false,
-    Title="Luna Hub | Key System",
-    Description=nil,
-    Link=Copylink(),
-    Discord="test",
-    SaveKey=false,
-    Verify=function(key)
+    Debug = false,
+    Title = "Luna Hub | Key System",
+    Description = nil,
+    Link = function(key)      
+    Discord = "test",
+    SaveKey = false,
+    Verify = function(key)
         KeyValid = verifyKey(key) -- Store key validity
         return KeyValid
     end,
