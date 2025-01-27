@@ -1,6 +1,3 @@
--- Load the Platoboost library
-local lEncode, lDecode, lDigest = a3, aw, Z;
-
 --! Platoboost configuration
 local service = 362  -- Your service ID, this is used to identify your service.
 local secret = "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad";  -- Obfuscate this for security.
