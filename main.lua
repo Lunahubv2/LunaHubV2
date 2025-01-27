@@ -16,7 +16,7 @@ local requestSending = false
 local fRequest = request or http_request or syn_request
 local fOsTime = os.time
 local fMathRandom = math.random
-local fGetHwid = gethwid or function() return game.Players.LocalPlayer.UserId end
+local fGetUserId = function() return game.Players.LocalPlayer.UserId end -- Changed from HWID to UserId
 local cachedLink, cachedTime = "", 0 -- Variables for caching
 
 -- Pick host
@@ -47,7 +47,7 @@ function cacheLink()
             Method = "POST",
             Body = lEncode({
                 service = service,
-                identifier = fGetHwid()
+                identifier = fGetUserId() -- Now using UserId
             }),
             Headers = {
                 ["Content-Type"] = "application/json"
@@ -94,7 +94,7 @@ local function redeemKey(key)
     local endpoint = host .. "/public/redeem/" .. tostring(service)
 
     local body = {
-        identifier = fGetHwid(), -- Generate HWID identifier
+        identifier = fGetUserId(), -- Now using UserId
         key = key,
         nonce = useNonce and nonce or nil
     }
@@ -131,7 +131,7 @@ local function verifyKey(key)
     end
 
     local nonce = generateNonce()
-    local endpoint = host .. "/public/whitelist/" .. tostring(service) .. "?identifier=" .. fGetHwid() .. "&key=" .. key
+    local endpoint = host .. "/public/whitelist/" .. tostring(service) .. "?identifier=" .. fGetUserId() .. "&key=" .. key
 
     if useNonce then
         endpoint = endpoint .. "&nonce=" .. nonce
@@ -159,7 +159,7 @@ local function verifyKey(key)
 end
 
 -- Copy link function
-local link copyLink()
+local function copyLink()
     local success, link = cacheLink()
     
     if success then
@@ -175,7 +175,7 @@ local KeyValid = false
 local response = KeySystem:Init({
     Debug = false,
     Title = "Luna Hub | Key System",
-    Description = nil, 
+    Description = nil,
     Discord = "test",
     SaveKey = false,
     Verify = function(key)
