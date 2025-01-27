@@ -104,7 +104,7 @@ local KeyValid = false
 -- Copy link function (to be called when link is validated)
 local function copyLink()
     -- Replace with the actual link you want to copy
-    local linkToCopy = "https://example.com/some-link" 
+    local linkToCopy =  copyLink()
     setclipboard(linkToCopy) -- Copy link to clipboard
     onMessage("Link copied to clipboard: " .. linkToCopy)
 end
