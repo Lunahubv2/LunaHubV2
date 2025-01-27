@@ -1,423 +1,194 @@
---! configuration
-local service = 362;  -- your service id, this is used to identify your service.
-local secret = "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad";  -- make sure to obfuscate this if you want to ensure security.
-local useNonce = true;  -- use a nonce to prevent replay attacks and request tampering.
+-- Platoboost configuration
+local service = 362  -- Your service ID
+local secret = "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad"  -- Your secret key for security
+local useNonce = true  -- Use a nonce to prevent replay attacks
 
---! callbacks
-local onMessage = function(message) end;
+-- Callbacks
+local onMessage = function(message) 
+    print(message) -- Print messages to console for debugging
+end
 
---! wait for game to load
-repeat task.wait(1) until game:IsLoaded();
+-- Wait for the game to load completely
+repeat task.wait(1) until game:IsLoaded()
 
---! functions
-local requestSending = false;
-local fSetClipboard, fRequest, fStringChar, fToString, fStringSub, fOsTime, fMathRandom, fMathFloor, fGetHwid = setclipboard or toclipboard, request or http_request or syn_request, string.char, tostring, string.sub, os.time, math.random, math.floor, gethwid or function() return game:GetService("Players").LocalPlayer.UserId end
-local cachedLink, cachedTime = "", 0;
+-- Functions
+local requestSending = false
+local fRequest = request or http_request or syn_request
+local fOsTime = os.time
+local fMathRandom = math.random
+local fGetHwid = gethwid or function() return game.Players.LocalPlayer.UserId end
+local cachedLink, cachedTime = "", 0 -- Variables for caching
 
---! pick host
-local host = "https://api.platoboost.com";
+-- Pick host
+local host = "https://api.platoboost.com"
 local hostResponse = fRequest({
     Url = host .. "/public/connectivity",
     Method = "GET"
-});
-if hostResponse.StatusCode ~= 200 or hostResponse.StatusCode ~= 429 then
-    host = "https://api.platoboost.net";
+})
+if hostResponse.StatusCode ~= 200 then
+    host = "https://api.platoboost.net"
 end
 
---!optimize 2
+-- Function to encode data to JSON
+local function lEncode(data)
+    return game:GetService("HttpService"):JSONEncode(data)
+end
+
+-- Function to decode JSON data
+local function lDecode(data)
+    return game:GetService("HttpService"):JSONDecode(data)
+end
+
+-- Cache Link Function
 function cacheLink()
-    if cachedTime + (10*60) < fOsTime() then
+    if (not cachedLink or cachedTime + (10 * 60) < fOsTime()) then
         local response = fRequest({
             Url = host .. "/public/start",
             Method = "POST",
             Body = lEncode({
                 service = service,
-                identifier = lDigest(fGetHwid())
+                identifier = fGetHwid()
             }),
             Headers = {
                 ["Content-Type"] = "application/json"
             }
-        });
+        })
 
         if response.StatusCode == 200 then
-            local decoded = lDecode(response.Body);
+            local decoded = lDecode(response.Body)
 
-            if decoded.success == true then
-                cachedLink = decoded.data.url;
-                cachedTime = fOsTime();
-                return true, cachedLink;
+            if decoded.success then
+                cachedLink = decoded.data.url
+                cachedTime = fOsTime()
+                return true, cachedLink
             else
-                onMessage(decoded.message);
-                return false, decoded.message;
+                onMessage(decoded.message)
+                return false, decoded.message
             end
         elseif response.StatusCode == 429 then
-            local msg = "you are being rate limited, please wait 20 seconds and try again.";
-            onMessage(msg);
-            return false, msg;
+            local msg = "You are being rate limited, please wait 20 seconds and try again."
+            onMessage(msg)
+            return false, msg
         end
 
-        local msg = "Failed to cache link.";
-        onMessage(msg);
-        return false, msg;
+        local msg = "Failed to cache link."
+        onMessage(msg)
+        return false, msg
     else
-        return true, cachedLink;
+        return true, cachedLink
     end
 end
 
-cacheLink();
-
---!optimize 2
-local generateNonce = function()
+-- Nonce generation
+local function generateNonce()
     local str = ""
     for _ = 1, 16 do
-        str = str .. fStringChar(fMathFloor(fMathRandom() * (122 - 97 + 1)) + 97)
+        str = str .. string.char(fMathRandom(97, 122)) -- Generate random lowercase letters
     end
     return str
 end
 
---!optimize 1
-for _ = 1, 5 do
-    local oNonce = generateNonce();
-    task.wait(0.2)
-    if generateNonce() == oNonce then
-        local msg = "platoboost nonce error.";
-        onMessage(msg);
-        error(msg);
-    end
-end
-
---!optimize 2
-local copyLink = function()
-    local success, link = cacheLink();
-    
-    if success then
-        fSetClipboard(link);
-    end
-end
-
---!optimize 2
-local redeemKey = function(key)
-    local nonce = generateNonce();
-    local endpoint = host .. "/public/redeem/" .. fToString(service);
+-- Redeem key function
+local function redeemKey(key)
+    local nonce = generateNonce()
+    local endpoint = host .. "/public/redeem/" .. tostring(service)
 
     local body = {
-        identifier = lDigest(fGetHwid()),
-        key = key
+        identifier = fGetHwid(), -- Generate HWID identifier
+        key = key,
+        nonce = useNonce and nonce or nil
     }
-
-    if useNonce then
-        body.nonce = nonce;
-    end
 
     local response = fRequest({
         Url = endpoint,
         Method = "POST",
         Body = lEncode(body),
-        Headers = {
-            ["Content-Type"] = "application/json"
-        }
-    });
+        Headers = { ["Content-Type"] = "application/json" }
+    })
 
     if response.StatusCode == 200 then
-        local decoded = lDecode(response.Body);
-
-        if decoded.success == true then
-            if decoded.data.valid == true then
-                if useNonce then
-                    if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
-                        return true;
-                    else
-                        onMessage("failed to verify integrity.");
-                        return false;
-                    end    
-                else
-                    return true;
-                end
-            else
-                onMessage("key is invalid.");
-                return false;
-            end
+        local decoded = lDecode(response.Body)
+        if decoded.success and decoded.data.valid then
+            onMessage("Key redeemed successfully!")
+            return true
         else
-            if fStringSub(decoded.message, 1, 27) == "unique constraint violation" then
-                onMessage("you already have an active key, please wait for it to expire before redeeming it.");
-                return false;
-            else
-                onMessage(decoded.message);
-                return false;
-            end
+            onMessage("Invalid key.")
+            return false
         end
-    elseif response.StatusCode == 429 then
-        onMessage("you are being rate limited, please wait 20 seconds and try again.");
-        return false;
     else
-        onMessage("server returned an invalid status code, please try again later.");
-        return false; 
+        onMessage("Error redeeming key: " .. response.StatusCode)
+        return false
     end
 end
 
---!optimize 2
-local verifyKey = function(key)
-    if requestSending == true then
-        onMessage("a request is already being sent, please slow down.");
-        return false;
+-- Verify key function
+local function verifyKey(key)
+    if requestSending then
+        onMessage("A request is already being sent, please slow down.")
+        return false
     else
-        requestSending = true;
+        requestSending = true
     end
 
-    local nonce = generateNonce();
-    local endpoint = host .. "/public/whitelist/" .. fToString(service) .. "?identifier=" .. lDigest(fGetHwid()) .. "&key=" .. key;
+    local nonce = generateNonce()
+    local endpoint = host .. "/public/whitelist/" .. tostring(service) .. "?identifier=" .. fGetHwid() .. "&key=" .. key
 
     if useNonce then
-        endpoint = endpoint .. "&nonce=" .. nonce;
+        endpoint = endpoint .. "&nonce=" .. nonce
     end
 
     local response = fRequest({
         Url = endpoint,
-        Method = "GET",
-    });
+        Method = "GET"
+    })
 
-    requestSending = false;
-
-    if response.StatusCode == 200 then
-        local decoded = lDecode(response.Body);
-
-        if decoded.success == true then
-            if decoded.data.valid == true then
-                if useNonce then
-                    if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
-                        return true;
-                    else
-                        onMessage("failed to verify integrity.");
-                        return false;
-                    end
-                else
-                    return true;
-                end
-            else
-                if fStringSub(key, 1, 4) == "KEY_" then
-                    return redeemKey(key);
-                else
-                    onMessage("key is invalid.");
-                    return false;
-                end
-            end
-        else
-            onMessage(decoded.message);
-            return false;
-        end
-    elseif response.StatusCode == 429 then
-        onMessage("you are being rate limited, please wait 20 seconds and try again.");
-        return false;
-    else
-        onMessage("server returned an invalid status code, please try again later.");
-        return false;
-    end
-end
-
--- optimize 2! ------------------------------------------------------------------------------------------------------------------------------------ 
-local getFlag = function(name)
-    local nonce = generateNonce();
-    local endpoint = host .. "/public/flag/" .. fToString(service) .. "?name=" .. name;
-
-    if useNonce then
-        endpoint = endpoint .. "&nonce=" .. nonce;
-    end
-
-    local response = fRequest({
-        Url = endpoint,
-        Method = "GET",
-    });
+    requestSending = false
 
     if response.StatusCode == 200 then
-        local decoded = lDecode(response.Body);
-
-        if decoded.success == true then
-            if useNonce then
-                if decoded.data.hash == lDigest(fToString(decoded.data.value) .. "-" .. nonce .. "-" .. secret) then
-                    return decoded.data.value;
-                else
-                    onMessage("failed to verify integrity.");
-                    return nil;
-                end
-            else
-                return decoded.data.value;
-            end
+        local decoded = lDecode(response.Body)
+        if decoded.success and decoded.data.valid then
+            onMessage("Key is valid!")
+            return true
         else
-            onMessage(decoded.message);
-            return nil;
+            return redeemKey(key) -- Try redeeming the key if it is not valid
         end
     else
-        return nil;
+        onMessage("Error verifying key: " .. response.StatusCode)
+        return false
     end
 end
 
-task.spawn(function()
-    local ScreenGui = Instance.new("ScreenGui")
-    local Frame = Instance.new("Frame")
-    local Topbar = Instance.new("Frame")
-    local Exit = Instance.new("TextButton")
-    local minimize = Instance.new("TextButton")
-    local Frame_2 = Instance.new("Frame")
-    local Getkey = Instance.new("TextButton")
-    local Checkkey = Instance.new("TextButton")
-    local TextBox = Instance.new("TextBox")
-    local TextLabel = Instance.new("TextLabel")
+-- Copy link function
+local function copyLink()
+    local success, link = cacheLink()
     
-
-    ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    
-    Frame.Parent = ScreenGui
-    Frame.BackgroundColor3 = Color3.fromRGB(76, 76, 76)
-    Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Frame.BorderSizePixel = 0
-    Frame.Position = UDim2.new(0.286729872, 0, 0.295880139, 0)
-    Frame.Size = UDim2.new(0, 359, 0, 217)
-    
-    Topbar.Name = "Topbar"
-    Topbar.Parent = Frame
-    Topbar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Topbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Topbar.BorderSizePixel = 0
-    Topbar.Size = UDim2.new(0, 359, 0, 27)
-    
-    Exit.Name = "Exit"
-    Exit.Parent = Topbar
-    Exit.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    Exit.BackgroundTransparency = 0.300
-    Exit.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Exit.BorderSizePixel = 0
-    Exit.Position = UDim2.new(0.905292451, 0, 0.111111112, 0)
-    Exit.Size = UDim2.new(0, 25, 0, 20)
-    Exit.Font = Enum.Font.SourceSans
-    Exit.Text = "X"
-    Exit.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Exit.TextScaled = true
-    Exit.TextSize = 14.000
-    Exit.TextWrapped = true
-    
-    minimize.Name = "minimize"
-    minimize.Parent = Topbar
-    minimize.BackgroundColor3 = Color3.fromRGB(85, 255, 0)
-    minimize.BackgroundTransparency = 0.300
-    minimize.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    minimize.BorderSizePixel = 0
-    minimize.Position = UDim2.new(0.810584962, 0, 0.111111112, 0)
-    minimize.Size = UDim2.new(0, 25, 0, 20)
-    minimize.Font = Enum.Font.SourceSans
-    minimize.Text = "-"
-    minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
-    minimize.TextScaled = true
-    minimize.TextSize = 14.000
-    minimize.TextWrapped = true
-    
-    Frame_2.Parent = Frame
-    Frame_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Frame_2.BackgroundTransparency = 1.000
-    Frame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Frame_2.BorderSizePixel = 0
-    Frame_2.Position = UDim2.new(0, 0, 0.124423966, 0)
-    Frame_2.Size = UDim2.new(0, 359, 0, 189)
-    
-    Getkey.Name = "Getkey"
-    Getkey.Parent = Frame_2
-    Getkey.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Getkey.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Getkey.BorderSizePixel = 0
-    Getkey.Position = UDim2.new(0.317548752, 0, 0.523809552, 0)
-    Getkey.Size = UDim2.new(0, 130, 0, 32)
-    Getkey.Font = Enum.Font.SourceSans
-    Getkey.Text = "Get Key"
-    Getkey.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Getkey.TextScaled = true
-    Getkey.TextSize = 14.000
-    Getkey.TextWrapped = true
-    
-    Checkkey.Name = "Checkkey"
-    Checkkey.Parent = Frame_2
-    Checkkey.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Checkkey.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    Checkkey.BorderSizePixel = 0
-    Checkkey.Position = UDim2.new(0.317548752, 0, 0.767195761, 0)
-    Checkkey.Size = UDim2.new(0, 130, 0, 32)
-    Checkkey.Font = Enum.Font.SourceSans
-    Checkkey.Text = "Verify Key"
-    Checkkey.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Checkkey.TextScaled = true
-    Checkkey.TextSize = 14.000
-    Checkkey.TextWrapped = true
-    
-    TextBox.Parent = Frame_2
-    TextBox.BackgroundColor3 = Color3.fromRGB(139, 139, 139)
-    TextBox.BackgroundTransparency = 0.600
-    TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    TextBox.BorderSizePixel = 0
-    TextBox.Position = UDim2.new(0.0779944286, 0, 0.137566134, 0)
-    TextBox.Size = UDim2.new(0, 304, 0, 42)
-    TextBox.Font = Enum.Font.SourceSans
-    TextBox.Text = ""
-    TextBox.TextTransparency = 1
-    TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
-    TextBox.TextScaled = true
-    TextBox.TextSize = 14.000
-    TextBox.TextWrapped = true
-    
-    TextLabel.Parent = Frame_2
-    TextLabel.BackgroundColor3 = Color3.fromRGB(211, 211, 211)
-    TextLabel.BackgroundTransparency = 1.000
-    TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    TextLabel.BorderSizePixel = 0
-    TextLabel.Position = UDim2.new(0.0779944286, 0, 0.137566134, 0)
-    TextLabel.Size = UDim2.new(0, 304, 0, 42)
-    TextLabel.ZIndex = 2
-    TextLabel.Font = Enum.Font.SourceSans
-    TextLabel.Text = "Please Enter Your Valid Key!"
-    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
-    TextLabel.TextScaled = true
-    TextLabel.TextSize = 14.000
-    TextLabel.TextStrokeTransparency = 0.830
-    TextLabel.TextTransparency = 0.550
-    TextLabel.TextWrapped = true
-    
-    TextBox:GetPropertyChangedSignal("Text"):Connect(function(text)
-        if TextBox.Text == "" then
-            TextLabel.Text =  "Please Enter Your Valid Key!"
-        else
-            TextLabel.Text = TextBox.Text
-        end
-    end)
-    
-    Checkkey.MouseButton1Down:Connect(function() 
-        if TextBox and TextBox.Text then
-            
-
-    local Verify = verifyKey(TextBox.Text)
-
-    if Verify then
-    -- If the key is correct, execute the script
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/jessajeal02/LunaHubV2/refs/heads/main/source.lua"))()
-    -- Now, assuming your ScreenGui is the parent of this script, destroy it
-    local ScreenGui = script.Parent
-    ScreenGui:Destroy() -- This will remove the ScreenGui from the player's screen
-else
-    -- If the key is incorrect, print a message
-    print("The Key is Incorrect, please try again")
+    if success then
+        setclipboard(link)
+        onMessage("Link copied to clipboard: " .. link)
+    end
 end
-    
-    Getkey.MouseButton1Down:Connect(function() 
-        copyLink()
-    end)
-    
-     Exit.MouseButton1Down:Connect(function()
-        if ScreenGui then
-            ScreenGui:Destroy()
-        end
-    end)
-    
-    
-    minimize.MouseButton1Down:Connect(function()
-        if ScreenGui then
-            ScreenGui.Enabled = false
-        end
-      end)        
-    end)
+
+-- Initialize Key System
+local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
+local KeyValid = false
+
+local response = KeySystem:Init({
+    Debug = false,
+    Title = "Luna Hub | Key System",
+    Description = nil,
+    Link = copyLink(),   
+    Discord = "test",
+    SaveKey = false,
+    Verify = function(key)
+        KeyValid = verifyKey(key) -- Store key validity
+        return KeyValid
+    end,
+    GuiParent = game.CoreGui
+})
+
+if not response or not KeyValid then return end
+
+-- If the key is valid, proceed with additional script actions
+print("Key is valid! Proceeding with the script...")
+
+-- Your additional functionalities can be added here.
