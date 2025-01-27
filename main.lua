@@ -97,17 +97,36 @@ local function verifyKey(key)
     end
 end
 
--- Initialize Key System
-local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
-local KeyValid = false
-
 -- Copy link function (to be called when link is validated)
 local function copyLink()
-    -- Replace with the actual link you want to copy
-    local linkToCopy =  copyLink()
+    local linkToCopy = "https://example.com/some-link"  -- Specify the link you want to copy
     setclipboard(linkToCopy) -- Copy link to clipboard
     onMessage("Link copied to clipboard: " .. linkToCopy)
 end
+
+-- Button functionality
+local copyButton = script.Parent:WaitForChild("copyButton") -- Adjust path accordingly
+local verifyButton = script.Parent:WaitForChild("verifyButton") -- Adjust path accordingly
+local keyBox = script.Parent:WaitForChild("keyBox") -- Adjust path accordingly
+
+copyButton.MouseButton1Click:Connect(function()
+    copyLink()
+end)
+
+verifyButton.MouseButton1Click:Connect(function()
+    local key = keyBox.Text  -- Get the key from the text box
+    local success = verifyKey(key)
+
+    if success then
+        print("Key is valid.")
+    else
+        print("Key is invalid.")
+    end
+end)
+
+-- Initialize Key System (if needed)
+local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
+local KeyValid = false
 
 local response = KeySystem:Init({
     Debug = false,
