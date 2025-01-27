@@ -1,6 +1,6 @@
 -- Platoboost configuration
 local service = 362  -- Your service ID
-local secret = "your_secret_key_here"  -- Your secret key for security
+local secret = "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad"  -- Your secret key for security
 local useNonce = true  -- Use a nonce to prevent replay attacks
 
 -- Callbacks
