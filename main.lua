@@ -169,6 +169,7 @@ local function copyLink()
 end
 
 -- Initialize Key System
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/ionlyusegithubformcmods/1-Line-Scripts/main/Mobile%20Friendly%20Orion')))()
 local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
 local KeyValid = false
 
@@ -188,6 +189,12 @@ local response = KeySystem:Init({
 if not response or not KeyValid then return end
 
 -- If the key is valid, proceed with additional script actions
-print("Key is valid! Proceeding with the script...")
+loadstring(game:HttpGet"https://github.com/Lunahubv2/LunaHubV2/blob/main/source.lua")()
 
 -- Your additional functionalities can be added here.
+OrionLib:MakeNotification({
+	Name = "Logged In!",
+	Content = "Key Valid Loading The Scripts"..Player.Name..".",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+}) --Notification
