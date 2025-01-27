@@ -159,7 +159,7 @@ local function verifyKey(key)
 end
 
 -- Copy link function
-local function copyLink()
+local link copyLink()
     local success, link = cacheLink()
     
     if success then
@@ -176,7 +176,7 @@ local response = KeySystem:Init({
     Debug = false,
     Title = "Luna Hub | Key System",
     Description = nil,
-    Link = copyLink(),   
+    Link = ,   
     Discord = "test",
     SaveKey = false,
     Verify = function(key)
