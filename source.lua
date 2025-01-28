@@ -2,7 +2,7 @@ repeat wait() until game:IsLoaded()
 
 local PlaceId = game.PlaceId
 local lastExecutionTime = 0
-local executionCooldown = 15 -- 5 seconds cooldown between script executions
+local executionCooldown = 9999 -- 5 seconds cooldown between script executions
 
 local function canExecute()
     local currentTime = tick()
