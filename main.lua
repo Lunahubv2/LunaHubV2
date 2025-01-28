@@ -299,9 +299,12 @@ end)
 bruh9.MouseButton1Click:Connect(function()
     local key = bruh3.Text -- Get the input key from the TextBox
     local validKey = verifyKey(key) -- Verify the key
+          bruh9.Text = "Verifying!"
+          wait(1)
+          bruh9.Text = "Check Key"
 
     if validKey then
-        wait(1)
+        wait()
         bruh3.Text = "[Key] ✔️ Valid Key!"
         
         -- Load the script from the URL
@@ -315,10 +318,4 @@ bruh9.MouseButton1Click:Connect(function()
         bruh3.Text = "Invalid Key! Try Again"
         wait(1)
         bruh3.Text = "   Enter Key Here"
-    end
-
-    -- Update button text for verification feedback
-    bruh9.Text = "Verifying!"
-    wait(2)
-    bruh9.Text = "Check Key"
-end)
+    end)
