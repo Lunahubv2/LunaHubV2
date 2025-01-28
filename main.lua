@@ -306,8 +306,7 @@ bruh9.MouseButton1Click:Connect(function()
         
         -- Load the script from the URL
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/main/source.lua"))()
-    else
-        print("Games not on the list!")
+    
 
         -- Destroy the GUI after loading the script
         gui:Destroy()
