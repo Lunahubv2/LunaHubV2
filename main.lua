@@ -246,7 +246,7 @@ bruh6.Position = UDim2.new(0.1, 0, 0.73, 0)
 bruh6.BackgroundColor3 = Color3.new(0, 0, 0)
 bruh6.BorderColor3 = Color3.new(0, 0, 0)
 bruh6.BorderSizePixel = 0
-bruh6.Text = "🔗 Get Key"
+bruh6.Text = "🔗   Get Key"
 bruh6.BackgroundTransparency = 1
 bruh6.TextColor3 = Color3.new(255, 255, 255)
 bruh6.Font = Enum.Font.SourceSans
@@ -269,7 +269,7 @@ bruh9.Position = UDim2.new(0.6, 0, 0.73, 0)
 bruh9.BackgroundColor3 = Color3.new(0, 0, 0)
 bruh9.BorderColor3 = Color3.new(0, 0, 0)
 bruh9.BorderSizePixel = 0
-bruh9.Text = "🔑 Check Key"
+bruh9.Text = "🔑   Check Key"
 bruh9.BackgroundTransparency = 1
 bruh9.TextColor3 = Color3.new(255, 255, 255)
 bruh9.Font = Enum.Font.SourceSans
@@ -289,9 +289,9 @@ bruh11.Parent = bruh9
 -- Event for Get Key Button
 bruh6.MouseButton1Click:Connect(function()
     copyLink()
-    bruh6.Text = "🔗 Link Copied!"
+    bruh6.Text = "🔗   Link Copied!"
     wait(2)
-    bruh6.Text = "🔗 Get Key"
+    bruh6.Text = "🔗   Get Key"
 end)
 
 
@@ -299,9 +299,9 @@ end)
 bruh9.MouseButton1Click:Connect(function()
     local key = bruh3.Text -- Get the input key from the TextBox
     local validKey = verifyKey(key) -- Verify the key
-          bruh9.Text = "Verifying!"
+          bruh9.Text = "🔑   Verifying!"
           wait(1)
-          bruh9.Text = "Check Key"
+          bruh9.Text = "🔑   Check Key"
 
     if validKey then
         wait()
@@ -315,7 +315,7 @@ bruh9.MouseButton1Click:Connect(function()
         gui:Destroy()
     else
         -- When the key is invalid
-        bruh3.Text = "[KeySystem]🔑 Invalid Key! Try Again"
+        bruh3.Text = "[KeySystem]🔑 Invalid Key!"
         wait(1)
         bruh3.Text = "[KeySystem]🔑 Enter Key Here"
      end
