@@ -2,12 +2,12 @@ repeat wait() until game:IsLoaded()
 
 local Players = game:GetService("Players")
 local PlaceId = game.PlaceId
-local lastExecutionTime = 0
-local executionCooldown = 5 -- 5 seconds cooldown between script executions
+local lastExecutionTime = 30
+local executionCooldown = 30 -- 5 seconds cooldown between script executions
 
 -- Anti-spam variables
 local spamCount = 0
-local spamLimit = 3 -- Number of messages allowed before kick
+local spamLimit = 1 -- Number of messages allowed before kick
 local timeFrame = 5 -- Time frame in seconds to count messages
 local messageTimestamps = {}
 
