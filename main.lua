@@ -318,4 +318,5 @@ bruh9.MouseButton1Click:Connect(function()
         bruh3.Text = "[KeySystem]🔑 Invalid Key! Try Again"
         wait(1)
         bruh3.Text = "[KeySystem]🔑 Enter Key Here"
-    end)
+     end
+ end)
