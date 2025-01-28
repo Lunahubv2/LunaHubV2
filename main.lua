@@ -294,8 +294,6 @@ bruh6.MouseButton1Click:Connect(function()
     bruh6.Text = "Get Key"
 end)
 
-
-
 bruh9.MouseButton1Click:Connect(function()
     local key = bruh3.Text -- Get the input key from the TextBox
     local validKey = verifyKey(key) -- Verify the key
@@ -318,4 +316,5 @@ bruh9.MouseButton1Click:Connect(function()
         bruh3.Text = "Invalid Key! Try Again"
         wait(1)
         bruh3.Text = "   Enter Key Here"
-    end)
+    end
+ end)
