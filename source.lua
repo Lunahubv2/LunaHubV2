@@ -60,7 +60,7 @@ if canExecute() then
         -- Arsenal
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Script-Blox/Script/main/Script-Blox"))()
     else
-        game.Players:WaitForChild("LocalPlayer"):Kick("This game is not supported")
+        game.Players.LocalPlayer:Kick("This game is not supported")
     end
 else
     warn("Script execution is on cooldown. Please wait before trying again.")
