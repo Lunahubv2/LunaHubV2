@@ -304,21 +304,28 @@ bruh9.MouseButton1Click:Connect(function()
           bruh9.Text = "🔑   Check Key"
 
     if validKey then
-        bruh3.Text = "[KeySystem] Valid Key!"
-        wait(1)
+        game:GetService("StarterGui"):SetCore("SendNotification",{
+	    Title = "Luna Hub V2 - Key System!", -- Required
+	    Text = "The Key is Valid. Loading Script!", -- Required
+	    Icon = "rbxassetid://1234567890" -- Optional
+      })
+      wait(3)
+        
+       -- Load the script from the URL
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/main/source.lua"))()
 
-            
+
+        
         -- Destroy the GUI after loading the script
         gui:Destroy()
             
         
-            
-        -- Load the script from the URL
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/main/source.lua"))()
     else
         -- When the key is invalid
-        bruh3.Text = "[KeySystem]🔑 Invalid Key!"
-        wait(1)
-        bruh3.Text = "[KeySystem]🔑 Enter Key Here"
+        game:GetService("StarterGui"):SetCore("SendNotification",{
+	    Title = "Luna Hub V2 - Key System!", -- Required
+	    Text = "The Key is Invalid. Please Try Again!", -- Required
+	    Icon = "rbxassetid://1234567890" -- Optional
+      })
      end
  end)
