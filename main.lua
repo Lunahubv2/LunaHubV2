@@ -294,38 +294,45 @@ bruh6.MouseButton1Click:Connect(function()
     bruh6.Text = "🔗   Get Key"
 end)
 
-
-
 bruh9.MouseButton1Click:Connect(function()
     local key = bruh3.Text -- Get the input key from the TextBox
     local validKey = verifyKey(key) -- Verify the key
-          bruh9.Text = "🔑   Verifying!"
-          wait(1)
-          bruh9.Text = "🔑   Check Key"
+    bruh9.Text = "🔑   Verifying!"
+    wait(1)
+    bruh9.Text = "🔑   Check Key"
 
     if validKey then
-        game:GetService("StarterGui"):SetCore("SendNotification",{
-	    Title = "Luna Hub V2 - Key System!", -- Required
-	    Text = "The Key is Valid. Loading Script!", -- Required
-	    Icon = "rbxassetid://1234567890" -- Optional
-      })
-      wait(3)
-        
-       -- Load the script from the URL
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/main/source.lua"))()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Luna Hub V2", -- Required
+            Text = "The Key is Valid. Loading Script!", -- Required
+            Icon = "rbxassetid://1234567890" -- Optional
+        })
+        wait(3)
 
+        -- Load the script from the URL
+        local success, result = pcall(function()
+            return game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/main/source.lua")
+        end)
 
-        
-        -- Destroy the GUI after loading the script
-        gui:Destroy()
-            
+        if success then
+            local loadedFunction, loadError = load(result)
+            if loadedFunction then
+                loadedFunction() -- Execute the loaded script
+                -- Destroy the GUI after loading the script
+                gui:Destroy()
+            else
+                warn("Failed to load the script: " .. loadError)
+            end
+        else
+            warn("Failed to get the script: " .. result)
+        end
         
     else
         -- When the key is invalid
-        game:GetService("StarterGui"):SetCore("SendNotification",{
-	    Title = "Luna Hub V2 - Key System!", -- Required
-	    Text = "The Key is Invalid. Please Try Again!", -- Required
-	    Icon = "rbxassetid://1234567890" -- Optional
-      })
-     end
- end)
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Luna Hub V2", -- Required
+            Text = "The Key is Invalid. Please Try Again!", -- Required
+            Icon = "rbxassetid://1234567890" -- Optional
+        })
+    end
+end)
