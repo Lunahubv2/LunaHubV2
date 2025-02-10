@@ -1,4 +1,4 @@
-repeat wait() until game:IsLoaded()
+repeat wait(1) until game:IsLoaded()
 
 local Players = game:GetService("Players")
 local PlaceId = game.PlaceId
