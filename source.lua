@@ -1,6 +1,5 @@
 repeat wait(1) until game:IsLoaded()
 
-local Players = game:GetService("Players")
 local PlaceId = game.PlaceId
     if PlaceId == 2753915549 or PlaceId == 4442272183 or PlaceId == 7449423635 then
         -- Blox Fruit
