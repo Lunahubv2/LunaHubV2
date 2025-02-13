@@ -211,7 +211,12 @@ local Checkkey = Tabs.KeySys:AddButton({
         local validKey = verifyKey(key) -- Use the function to verify the key
         
         if validKey then
-            print("Key is valid")
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+             Title = "Valid Key", -- Required
+             Text = "The Key is Correct Please Wait Script is Loading!", -- Required
+             Icon = "rbxassetid://1234567890" -- Optional
+             Duration = duration or 5
+          })
             -- Remove the entire UI window
             Window:Destroy() -- This removes the UI
             
@@ -224,19 +229,23 @@ local Checkkey = Tabs.KeySys:AddButton({
             if success then
                game:GetService("StarterGui"):SetCore("SendNotification", {
                    Title = "Luna Hub V2", -- Required
-                   Text = "script loaded successfully!", -- Required
+                   Text = "The Script Loaded Successfully!", -- Required
                    Icon = "rbxassetid://1234567890" -- Optional
+                   Duration = duration or 5         
                 })
             else
                 print("Error loading new script: " .. err)
             end
             
         else
-            print("Key is invalid")
+           game:GetService("StarterGui"):SetCore("SendNotification", {
+             Title = "Incorrect Key", -- Required
+             Text = "Please Enter Valid and Try Again!", -- Required
+             Icon = "rbxassetid://1234567890" -- Optional
+             Duration = duration or 3
         end
     end
 })
-
 
 -- Get Key Button
 local Getkey = Tabs.KeySys:AddButton({
@@ -245,6 +254,11 @@ local Getkey = Tabs.KeySys:AddButton({
     Callback = function()
         copyLink() -- Assuming copyLink is defined somewhere in your script
     end
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+             Title = "Luna Hub V2", -- Required
+             Text = "The Link Copied Successfully!", -- Required
+             Icon = "rbxassetid://1234567890" -- Optional
+             Duration = duration or 5 
 })
 
 Window:SelectTab(1) -- Select the first tab by default
