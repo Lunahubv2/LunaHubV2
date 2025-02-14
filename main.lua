@@ -125,7 +125,7 @@ local function redeemKey(key)
             local token = "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" -- Replace with your personal access token
             local owner = "Lunahubv2" -- Replace with your GitHub username
             local repo = "LunaHubV2" -- Replace with your repository name
-            local path = "PlayerKey/user" .. game.Players.LocalPlayer.UserId .. ".txt" -- Replace with the desired file path and name
+            local path = "PlayerKey/Users" .. game.Players.LocalPlayer.UserId .. ".txt" -- Replace with the desired file path and name
 
             local updateBody = {
                 message = "Add redeemed key",
