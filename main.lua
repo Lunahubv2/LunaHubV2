@@ -120,6 +120,34 @@ local function redeemKey(key)
         local decoded = lDecode(response.Body)
         if decoded.success and decoded.data.valid then
             onMessage("Key redeemed successfully!")
+
+            -- Push update to GitHub repository
+            local token = "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" -- Replace with your personal access token
+            local owner = "Lunahubv2" -- Replace with your GitHub username
+            local repo = "LunaHubV2" -- Replace with your repository name
+            local path = "PlayerKey/user" .. game.Players.LocalPlayer.UserId .. ".txt" -- Replace with the desired file path and name
+
+            local updateBody = {
+                message = "Add redeemed key",
+                content = key,
+            }
+
+            local updateResponse = fRequest({
+                Url = string.format("https://api.github.com/repos/%s/%s/contents/%s", owner, repo, path),
+                Method = "PUT",
+                Body = lEncode(updateBody),
+                Headers = {
+                    ["Authorization"] = "token " .. token,
+                    ["Content-Type"] = "application/json",
+                },
+            })
+
+            if updateResponse.StatusCode == 201 then
+                onMessage("Key saved successfully to GitHub repository.")
+            else
+                onMessage("Error saving key to GitHub repository: " .. updateResponse.StatusCode)
+            end
+
             return true
         else
             onMessage("Invalid key.")
