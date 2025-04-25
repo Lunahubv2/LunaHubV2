@@ -13,5 +13,5 @@ elseif PlaceId == 0000000 then
         -- Arsenal
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Script-Blox/Script/main/Script-Blox"))()
 else
-    game.Players.LocalPlayer:Kick("Sorry this games is not supported. Supported Game")
+    game.Players.LocalPlayer:Kick("Sorry this games is not supported or ask administrator fix it.")
 end
