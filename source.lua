@@ -12,6 +12,7 @@ elseif PlaceId == 17625359962 then
 elseif PlaceId == 0000000 then
         -- Arsenal
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Script-Blox/Script/main/Script-Blox"))()
+        -- Grow a Garden
 elseif PlaceId == 126884695634066 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/refs/heads/main/Local/Grow.lua"))() 
 else
