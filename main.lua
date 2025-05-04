@@ -286,6 +286,12 @@ StatusTab:AddButton({
     Description = "Script Working properly!",
 })
 
+-- Button for Grow a Garden Status
+StatusTab:AddButton({
+    Title = "🟢  Grow a Garden",
+    Description = "Script Working properly!",
+})
+
 -- Button for Fisch Status
 StatusTab:AddButton({
     Title = "🟢  Fisch",
