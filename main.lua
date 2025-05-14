@@ -292,6 +292,12 @@ StatusTab:AddButton({
     Description = "Script Working properly!",
 })
 
+-- Button for Grow a Dead Rials Status
+StatusTab:AddButton({
+    Title = "🟢  Dead Rails",
+    Description = "Script Working properly!",
+})
+
 -- Button for Fisch Status
 StatusTab:AddButton({
     Title = "🟢  Fisch",
