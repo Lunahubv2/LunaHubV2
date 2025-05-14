@@ -14,7 +14,9 @@ elseif PlaceId == 0000000 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Script-Blox/Script/main/Script-Blox"))()
         -- Grow a Garden
 elseif PlaceId == 126884695634066 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/refs/heads/main/Local/Grow.lua"))() 
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/refs/heads/main/Local/Grow.lua"))()
+elseif PlaceId == 116495829188952 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/refs/heads/main/Local/Deadrials.lua"))()
 else
     game.Players.LocalPlayer:Kick("Sorry this games is not supported or ask administrator fix it.")
 end
