@@ -4,6 +4,8 @@
 -- 🔴 - Not Working or Offline
 -- ⚫ - Discontinued
 
+local StatusTab = Window:AddTab({ Title = "Status", Icon = "" })
+
 -- Button for Blox Fruit Status
 StatusTab:AddButton({
     Title = "🟢  Blox Fruit",
