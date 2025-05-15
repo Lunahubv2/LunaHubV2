@@ -1,1 +1,6 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/refs/heads/main/source.lua"))()
+Main:Notify({
+    Title = "LunahubV2",
+    Content = "The script has been loaded.",
+    Duration = 5
+})
+
