@@ -282,7 +282,7 @@ local StatusTab = Window:AddTab({ Title = "Status", Icon = "" })
 
 -- Button for Blox Fruit Status
 StatusTab:AddButton({
-    Title = "🟢  Blox Fruit",
+    Title = "🟡  Blox Fruit",
     Description = "Script Working properly!",
 })
 
@@ -294,36 +294,36 @@ StatusTab:AddButton({
 
 -- Button for Grow a Dead Rials Status
 StatusTab:AddButton({
-    Title = "🟢  Dead Rails",
+    Title = "🔴 Dead Rails",
     Description = "Script Working properly!",
 })
 
 -- Button for Fisch Status
 StatusTab:AddButton({
-    Title = "🟢  Fisch",
+    Title = "🔴  Fisch",
     Description = "Script Working properly!",
 })
 
 -- Button for Rivals Status
 StatusTab:AddButton({
-    Title = "🔴  Rivals",
+    Title = "⚫  Rivals",
     Description = "Sorry Script Not Working properly!",
 })
 
 -- Button for The Strongest Battlegrounds Status
 StatusTab:AddButton({
-    Title = "🔴  The Strongest Battlegrounds",
+    Title = "⚫  The Strongest Battlegrounds",
     Description = "Sorry Script Not Working properly!",
 })
 
 -- Button for The Mimic Status
 StatusTab:AddButton({
-    Title = "🔴  The Mimic",
+    Title = "⚫  The Mimic",
     Description = "Sorry Script Not Working properly!",
 })
 
 -- Button for Arsenal Status
 StatusTab:AddButton({
-    Title = "🔴  Arsenal",
+    Title = "⚫ Arsenal",
     Description = "Sorry Script Not Working properly!",
 })
