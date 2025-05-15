@@ -277,8 +277,5 @@ local Getkey = Tabs.KeySys:AddButton({
 
 Window:SelectTab(1) -- Select the first tab by default
 
--- Status Tab
-local StatusTab = Window:AddTab({ Title = "Status", Icon = "" })
-
 -- Status Configuration
 local StatusTab = loadstring(game:HttpGet("https://raw.githubusercontent.com/Lunahubv2/LunaHubV2/refs/heads/main/status.lua"))()
